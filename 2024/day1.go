@@ -70,7 +70,76 @@ func part_one() string {
 	return fmt.Sprintf("%v\n", answer)
 }
 
+var my_map = make(map[int]int)
+var leftlist []int
+
+func part_two_helper() string {
+	input, err := os.ReadFile("./day1.input")
+
+	if err != nil {
+		fmt.Println("Error Reading the file ")
+	}
+
+	lines := strings.Split(string(input), "\n")
+
+	var rightlist []int
+
+	for _, line := range lines {
+
+		if line == "" {
+			continue
+		}
+
+		parts := strings.Fields(line)
+		if len(parts) != 2 {
+			continue
+		}
+
+		left, err := strconv.Atoi(parts[0])
+		if err != nil {
+			fmt.Println("error converting to int", err)
+			continue
+		}
+
+		right, err := strconv.Atoi(parts[1])
+		if err != nil {
+			fmt.Println("error converting to int", err)
+			return ""
+		}
+		leftlist = append(leftlist, left)
+		rightlist = append(rightlist, right)
+
+	}
+
+	for _, num := range rightlist {
+		my_map[num]++
+	}
+
+	return fmt.Sprintf("%v\n%v", leftlist, rightlist)
+}
+
+var rizz = []int{}
+
+func part_two() int {
+	for _, num := range leftlist {
+
+		if count, exists := my_map[num]; exists {
+			rizz = append(rizz, num*count)
+		} else {
+			rizz = append(rizz, 0)
+		}
+	}
+
+	return sum(rizz)
+
+}
+
 func main() {
 	res1 := part_one()
 	fmt.Printf("Part One: \n%v", res1)
+
+	part_two_helper()
+	res2 := part_two()
+	fmt.Printf("Part Two: %d\n", res2)
+
 }

@@ -8,9 +8,11 @@ import (
 	"regexp"
 )
 
-const FIND_OPS_PART1 = `(mul\(\d+,\d+\))`
-const FIND_OPS_PART2 = `((?:don't|do|mul)\(\d*,?\d*\))`
-const PARSE_MULTIPLIER = `mul\((\d+),(\d+)\)`
+const (
+	FIND_OPS_PART1   = `(mul\(\d+,\d+\))`
+	FIND_OPS_PART2   = `((?:don't|do|mul)\(\d*,?\d*\))`
+	PARSE_MULTIPLIER = `mul\((\d+),(\d+)\)`
+)
 
 func findOps(inputReader io.Reader, reString string) []string {
 	scanner := bufio.NewScanner(inputReader)
